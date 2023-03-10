@@ -1,6 +1,8 @@
+[![breant.art deployment](https://github.com/ArthurData/breant.art/actions/workflows/deploy.yml/badge.svg)](https://github.com/ArthurData/breant.art/actions/workflows/deploy.yml)
+
 # breant.art
 
-Welcome to my personal website. This is a work in progress, so please excuse the mess.
-During that time, I will be adding more content and making it look better.
+### Welcome to my personal website.
 
-Please visit my [website](https://breant.art) to see the latest version.
+[![image](https://img.shields.io/badge/website-000000?style=for-the-badge&logo=About.me&logoColor=white)](https://breant.art)
+
