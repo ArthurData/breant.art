@@ -1,7 +1,9 @@
 name: breant.art deployment
 
 on:
-  push: main
+  push:
+    branches:
+      - main
 
 jobs:
   deploy:
