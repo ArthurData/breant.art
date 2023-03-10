@@ -14,5 +14,6 @@ jobs:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USERNAME }}
           key: ${{ secrets.SSHKEY }}
-          passphrase: ${{ secrets.PASSPHRASE }}
-          script: ls
+          script: |
+            cd /var/www/html/breant.art
+            git pull
