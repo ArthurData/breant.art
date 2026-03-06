@@ -1,5 +1,3 @@
-[![breant.art deployment](https://github.com/ArthurData/breant.art/actions/workflows/deploy.yml/badge.svg)](https://github.com/ArthurData/breant.art/actions/workflows/deploy.yml)
-
 # breant.art
 
 ### Welcome to my personal website.
