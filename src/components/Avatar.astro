@@ -1,0 +1,17 @@
+---
+interface Props {
+  size?: number;
+}
+const { size = 120 } = Astro.props;
+---
+
+<img
+  src="/avatar.webp"
+  alt="Arthur Bréant"
+  width={size}
+  height={size}
+  class="avatar"
+  loading="eager"
+  fetchpriority="high"
+  decoding="sync"
+/>

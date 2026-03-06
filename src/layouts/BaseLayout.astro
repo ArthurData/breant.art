@@ -1,0 +1,52 @@
+---
+import css from '../styles/global.css?raw';
+
+interface Props {
+  title?: string;
+  description?: string;
+  lang?: string;
+}
+
+const {
+  title = "Arthur Bréant — Consultant & Trainer",
+  description = "Consultant and trainer at ThinkR. Passionate about web and tech.",
+  lang = "en",
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang={lang}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#7c3aed" />
+
+    <!-- Favicon -->
+    <link rel="icon" href="/favicon.ico" sizes="any" />
+
+    <!-- LCP : preload avatar -->
+    <link rel="preload" href="/avatar.webp" as="image" fetchpriority="high" />
+
+    <!-- Font preloads -->
+    <link rel="preload" href="/fonts/inter-400.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/inter-500.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/inter-600.woff2" as="font" type="font/woff2" crossorigin />
+
+    <!-- CSS inliné : pas de fichier externe, zéro round-trip supplémentaire -->
+    <Fragment set:html={`<style>${css}</style>`} />
+
+    <!-- Google Analytics (async, non-blocking) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-4DSK0PVMSL"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(...args: unknown[]) { (window.dataLayer as unknown[]).push(args); }
+      gtag('js', new Date());
+      gtag('config', 'G-4DSK0PVMSL');
+    </script>
+  </head>
+  <body>
+    <slot />
+  </body>
+</html>

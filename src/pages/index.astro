@@ -1,0 +1,78 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Avatar from '../components/Avatar.astro';
+import SkillTags from '../components/SkillTags.astro';
+import SocialLinks from '../components/SocialLinks.astro';
+import DecorativeBlob from '../components/DecorativeBlob.astro';
+import LanguageSwitcher from '../components/LanguageSwitcher.astro';
+import { translations } from '../i18n/index';
+---
+
+<BaseLayout
+  title="Arthur Bréant — Consultant & Trainer"
+  description="Consultant and trainer at ThinkR. Passionate about web and tech in general."
+>
+  <main class="page">
+    <section class="page__content">
+      <div class="hero">
+        <Avatar />
+        <div>
+          <h1 class="title" data-i18n="title">Hello, I'm Arthur Bréant</h1>
+          <p class="subtitle" data-i18n="subtitle">Welcome to my home</p>
+        </div>
+      </div>
+
+      <p class="body-text" data-i18n="firstSentence">
+        I am currently a consultant and trainer at ThinkR. Passionate about the web and tech in general, I am curious and always want to discover new things...
+      </p>
+
+      <p class="body-text" data-i18n="secondSentence">
+        From the mock-up, to the development of the code until the final integration, I wish to discover and share my knowledge and my creations.
+      </p>
+
+      <SkillTags />
+
+      <div class="divider"></div>
+
+      <div>
+        <p class="know-more" data-i18n="knowMore">You want to know more:</p>
+        <div style="margin-top: 0.875rem;">
+          <SocialLinks />
+        </div>
+      </div>
+
+      <LanguageSwitcher />
+    </section>
+
+    <div class="page__visual" aria-hidden="true">
+      <DecorativeBlob />
+    </div>
+  </main>
+
+  <!-- i18n : is:inline + define:vars → script synchrone, variables injectées au build -->
+  <script is:inline define:vars={{ i18nTranslations: translations }}>
+    function applyLocale(locale) {
+      var t = i18nTranslations[locale];
+      if (!t) return;
+      document.documentElement.lang = locale;
+      document.querySelectorAll('[data-i18n]').forEach(function (el) {
+        var key = el.dataset.i18n;
+        if (key && t[key] !== undefined) el.textContent = t[key];
+      });
+      document.querySelectorAll('[data-lang]').forEach(function (btn) {
+        btn.setAttribute('aria-pressed', btn.dataset.lang === locale ? 'true' : 'false');
+      });
+      try { localStorage.setItem('locale', locale); } catch (e) {}
+    }
+
+    var saved = 'en';
+    try { saved = localStorage.getItem('locale') || 'en'; } catch (e) {}
+    applyLocale(saved);
+
+    document.querySelectorAll('[data-lang]').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        applyLocale(btn.dataset.lang || 'en');
+      });
+    });
+  </script>
+</BaseLayout>
