@@ -37,13 +37,11 @@ const {
     <!-- CSS inliné : pas de fichier externe, zéro round-trip supplémentaire -->
     <Fragment set:html={`<style>${css}</style>`} />
 
-    <!-- Google Analytics (async, non-blocking) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-4DSK0PVMSL"></script>
+    <!-- Privacy-friendly analytics by Plausible -->
+    <script async src="https://plausible.breant.art/js/pa-DEg34YPL_HqLTHcaj0OR6.js"></script>
     <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(...args: unknown[]) { (window.dataLayer as unknown[]).push(args); }
-      gtag('js', new Date());
-      gtag('config', 'G-4DSK0PVMSL');
+      window.plausible=window.plausible||function(){(plausible.q=plausible.q||[]).push(arguments)},plausible.init=plausible.init||function(i){plausible.o=i||{}};
+      plausible.init()
     </script>
   </head>
   <body>
