@@ -62,11 +62,13 @@ export const contact = {
   email: 'breant.arthur@gmail.com',
 };
 
-/** Profils et sites, repris dans le `sameAs` du JSON-LD. */
-export const sameAs = [
-  'https://github.com/ArthurData',
-  'https://www.linkedin.com/in/arthurbreant/',
-  'https://hyperverse.world',
-  'https://pierrot.show/',
-  'https://topiq.run',
+/** Profils et sites, libellés pour /llms.txt et repris dans le `sameAs` du JSON-LD. */
+export const profiles = [
+  { label: 'GitHub', url: 'https://github.com/ArthurData' },
+  { label: 'LinkedIn', url: 'https://www.linkedin.com/in/arthurbreant/' },
+  { label: 'hyperverse', url: 'https://hyperverse.world' },
+  { label: 'pierrot.show', url: 'https://pierrot.show/' },
+  { label: 'TOPIQ', url: 'https://topiq.run' },
 ];
+
+export const sameAs = profiles.map((profile) => profile.url);
