@@ -5,11 +5,13 @@
  * pour savoir qui tu es, ce que tu as écrit, présenté et publié comme code.
  */
 import { site, sameAs, contact } from '../data/site';
-import { speaker } from '../data/content';
+import { speaker, career } from '../data/content';
+import { resolveLocale, localePath, locales } from '../data/types';
 import { articles, blog } from '../data/articles';
 import { talks } from '../data/talks';
 import { packages, projects, featuredProject } from '../data/projects';
 
+const lang = resolveLocale(Astro.currentLocale);
 const personId = `${site.url}/#arthur`;
 const abs = (path: string) => new URL(path, site.url).href;
 
@@ -21,8 +23,8 @@ const person = {
   familyName: 'Bréant',
   url: site.url,
   image: abs('/avatar.webp'),
-  jobTitle: "Consultant et formateur, développeur d'applications web R et Python",
-  description: speaker.bioShort.fr,
+  jobTitle: career.jobs[0].role[lang],
+  description: speaker.bioShort[lang],
   knowsLanguage: ['fr', 'en'],
   knowsAbout: site.knowsAbout,
   worksFor: {
@@ -30,7 +32,14 @@ const person = {
     name: 'ThinkR',
     url: 'https://thinkr.fr',
   },
-  workLocation: { '@type': 'Country', name: 'France' },
+  workLocation: { '@type': 'City', name: 'Lille', address: { '@type': 'PostalAddress', addressCountry: 'FR' } },
+  hasOccupation: career.jobs.map((job) => ({
+    '@type': 'EmployeeRole',
+    roleName: job.role.en,
+    startDate: job.start,
+    ...(job.end ? { endDate: job.end } : {}),
+    worksFor: { '@type': 'Organization', name: job.org },
+  })),
   ...(contact.email ? { email: contact.email } : {}),
   sameAs,
 };
@@ -49,12 +58,12 @@ const blogPostings = articles.map((article) => ({
 
 const presentations = talks.map((talk) => ({
   '@type': 'PresentationDigitalDocument',
-  name: talk.title.fr,
+  name: talk.title[lang],
   datePublished: talk.iso,
   inLanguage: 'fr',
   author: { '@id': personId },
   ...(talk.slides ? { url: talk.slides } : {}),
-  about: talk.topic.fr,
+  about: talk.topic[lang],
   recordedAt: {
     '@type': 'Event',
     name: talk.event,
@@ -98,11 +107,11 @@ const graph = {
   '@graph': [
     {
       '@type': 'ProfilePage',
-      '@id': `${site.url}/#page`,
-      url: site.url,
-      name: site.title,
-      description: site.description,
-      inLanguage: 'fr',
+      '@id': `${abs(localePath(lang))}#page`,
+      url: abs(localePath(lang)),
+      name: site.titleByLocale[lang],
+      description: site.descriptionByLocale[lang],
+      inLanguage: lang,
       mainEntity: { '@id': personId },
       primaryImageOfPage: abs(site.ogImage),
     },

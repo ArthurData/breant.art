@@ -10,16 +10,19 @@ export const site = {
   url: 'https://breant.art',
   year: 2026,
 
-  title:
-    "Arthur Bréant · Développeur Shiny et applications web R & Python",
-  description:
-    "Arthur Bréant, consultant et formateur chez ThinkR. Développeur d'applications web avec R et Python : Shiny, hyperverse, htmx. Expert Shiny en France, conférencier aux Rencontres R.",
-  ogDescription:
-    'Je construis des applications web modernes avec R et Python, de la maquette à la production.',
-
   titleByLocale: {
-    fr: "Arthur Bréant · Développeur Shiny et applications web R & Python",
+    fr: 'Arthur Bréant · Développeur Shiny et applications web R & Python',
     en: 'Arthur Bréant · Shiny developer, web apps with R & Python',
+  } satisfies Record<'fr' | 'en', string>,
+
+  descriptionByLocale: {
+    fr: "Arthur Bréant, consultant et formateur chez ThinkR à Lille. Développeur d'applications web avec R et Python : Shiny, hyperverse, htmx. Expert Shiny en France, conférencier aux Rencontres R.",
+    en: 'Arthur Bréant, consultant and trainer at ThinkR in Lille, France. He builds web applications with R and Python: Shiny, hyperverse, htmx. Shiny expert and speaker at the Rencontres R conference.',
+  } satisfies Record<'fr' | 'en', string>,
+
+  ogDescriptionByLocale: {
+    fr: 'Je construis des applications web modernes avec R et Python, de la maquette à la production.',
+    en: 'I build modern web applications with R and Python, from mockup to production.',
   } satisfies Record<'fr' | 'en', string>,
 
   /** Image de partage (1200 × 630), générée depuis la charte du site. */
@@ -32,6 +35,7 @@ export const site = {
     'Python (programming language)',
     'Web development',
     'htmx',
+    'Data analysis',
     'Data visualization',
     'golem',
     'Quarto',
@@ -46,6 +50,7 @@ export const nav: { href: string; label: L10n }[] = [
   { href: '#topiq', label: { fr: 'TOPIQ', en: 'TOPIQ' } },
   { href: '#talks', label: { fr: 'Talks', en: 'Talks' } },
   { href: '#articles', label: { fr: 'Articles', en: 'Articles' } },
+  { href: '#parcours', label: { fr: 'Parcours', en: 'Career' } },
   { href: '#pedagogie', label: { fr: 'Pédagogie', en: 'Teaching' } },
   { href: '#speaker', label: { fr: 'Speaker kit', en: 'Speaker kit' } },
 ];

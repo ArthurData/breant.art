@@ -1,0 +1,48 @@
+---
+/**
+ * Page d'accueil, partagée par les deux routes de langue.
+ * La locale vient de l'URL (`Astro.currentLocale`), pas du client.
+ */
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from './Header.astro';
+import Footer from './Footer.astro';
+import Runtime from './Runtime.astro';
+import T from './T.astro';
+
+import Hero from './sections/Hero.astro';
+import Pillars from './sections/Pillars.astro';
+import Hyperverse from './sections/Hyperverse.astro';
+import Topiq from './sections/Topiq.astro';
+import Projects from './sections/Projects.astro';
+import Talks from './sections/Talks.astro';
+import Articles from './sections/Articles.astro';
+import Career from './sections/Career.astro';
+import Pedagogy from './sections/Pedagogy.astro';
+import SpeakerKit from './sections/SpeakerKit.astro';
+import Contact from './sections/Contact.astro';
+---
+
+<BaseLayout>
+  <a href="#top" class="skip-link">
+    <T t={{ fr: 'Aller au contenu', en: 'Skip to content' }} />
+  </a>
+
+  <Header />
+
+  <main id="top">
+    <Hero />
+    <Pillars />
+    <Hyperverse />
+    <Topiq />
+    <Projects />
+    <Talks />
+    <Articles />
+    <Career />
+    <Pedagogy />
+    <SpeakerKit />
+    <Contact />
+  </main>
+
+  <Footer />
+  <Runtime />
+</BaseLayout>

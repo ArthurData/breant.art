@@ -12,7 +12,7 @@ const host = talksPage.url.replace(/^https?:\/\//, '').replace(/\/$/, '');
 
   <p class="section__lede" data-reveal>
     <T t={talksPage.lede} />{' '}
-    <a href={talksPage.url} class="link--violet ext" rel="noopener">{host}<Ext /></a>
+    <a href={talksPage.url} class="link--violet ext" target="_blank" rel="noopener">{host}<Ext /></a>
   </p>
 
   {
@@ -52,7 +52,7 @@ const host = talksPage.url.replace(/^https?:\/\//, '').replace(/\/$/, '');
           </span>
           <span class="talk__links">
             {talk.slides && (
-              <a href={talk.slides} class="ext" rel="noopener">
+              <a href={talk.slides} class="ext" target="_blank" rel="noopener">
                 slides
                 <span class="sr-only">
                   <T t={{ fr: ` : ${talk.title.fr}`, en: `: ${talk.title.en}` }} />
@@ -61,7 +61,7 @@ const host = talksPage.url.replace(/^https?:\/\//, '').replace(/\/$/, '');
               </a>
             )}
             {talk.video && (
-              <a href={talk.video} class="ext" rel="noopener">
+              <a href={talk.video} class="ext" target="_blank" rel="noopener">
                 <T t={{ fr: 'vidéo', en: 'video' }} />
                 <span class="sr-only">
                   <T t={{ fr: ` : ${talk.title.fr}`, en: `: ${talk.title.en}` }} />

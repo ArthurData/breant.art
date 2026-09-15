@@ -1,18 +1,21 @@
 ---
 /**
- * Fragment bilingue. Les deux langues sont dans le HTML ; le CSS
- * (`html[lang] [data-l]`) n'en affiche qu'une — aucun JS requis au chargement.
+ * Fragment traduit, résolu à la compilation depuis la locale de la page.
+ * Une seule langue est émise dans le HTML : l'extraction de texte reste propre
+ * pour les crawlers et les moteurs IA.
  *
  *   <T t={monTexte} />                        texte simple
  *   <T><Fragment slot="fr">…</Fragment>…</T>  texte enrichi (balises)
  */
 import type { L10n } from '../data/types';
+import { resolveLocale } from '../data/types';
 
 interface Props {
   t?: L10n | null;
 }
 
 const { t } = Astro.props;
+const lang = resolveLocale(Astro.currentLocale);
 ---
 
-<span data-l="fr"><slot name="fr">{t?.fr}</slot></span><span data-l="en"><slot name="en">{t?.en}</slot></span>
+{t ? t[lang] : lang === 'fr' ? <slot name="fr" /> : <slot name="en" />}

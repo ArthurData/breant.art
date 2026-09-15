@@ -1,38 +1,13 @@
 ---
 /**
- * Comportements client : langue, thème, filtre des talks, apparition au défilement.
- * Un seul script inline, sans dépendance. Tout reste fonctionnel sans JavaScript.
+ * Comportements client : thème, filtre des talks, apparition au défilement.
+ * La langue est résolue à la compilation (routage i18n), plus rien à faire ici.
  */
-import { site } from '../data/site';
 ---
 
-<script is:inline define:vars={{ titles: site.titleByLocale }}>
+<script is:inline>
   (function () {
     var html = document.documentElement;
-
-    /* ── Langue ─────────────────────────────────────────────────────── */
-    function syncLang(lang) {
-      html.lang = lang;
-      if (titles[lang]) document.title = titles[lang];
-      document.querySelectorAll('[data-set-lang]').forEach(function (btn) {
-        btn.setAttribute(
-          'aria-pressed',
-          btn.dataset.setLang === lang ? 'true' : 'false'
-        );
-      });
-    }
-
-    document.querySelectorAll('[data-set-lang]').forEach(function (btn) {
-      btn.addEventListener('click', function () {
-        var lang = btn.dataset.setLang;
-        syncLang(lang);
-        try {
-          localStorage.setItem('lang', lang);
-        } catch (e) {}
-      });
-    });
-
-    syncLang(html.lang === 'en' ? 'en' : 'fr');
 
     /* ── Thème ──────────────────────────────────────────────────────── */
     var prefersDark = window.matchMedia('(prefers-color-scheme: dark)');

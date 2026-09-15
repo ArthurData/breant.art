@@ -1,6 +1,7 @@
 ---
 import T from './../T.astro';
 import Ext from './../Ext.astro';
+import NewTab from './../NewTab.astro';
 import { featuredProject, projects } from '../../data/projects';
 ---
 
@@ -12,7 +13,7 @@ import { featuredProject, projects } from '../../data/projects';
   <div class="project-hero" data-reveal>
     <div class="project-hero__head">
       <h3 class="project-hero__title">{featuredProject.name}</h3>
-      <a href={featuredProject.awardUrl} class="badge--award" rel="noopener">
+      <a href={featuredProject.awardUrl} class="badge--award" target="_blank" rel="noopener">
         <T t={featuredProject.award} /><Ext />
       </a>
     </div>
@@ -24,7 +25,7 @@ import { featuredProject, projects } from '../../data/projects';
         featuredProject.implementations.map((impl) => (
           <li class="impl">
             <span class="impl__lang">{impl.label}</span>
-            <a href={impl.demo} class="link--violet ext" rel="noopener">
+            <a href={impl.demo} class="link--violet ext" target="_blank" rel="noopener">
               <T t={{ fr: 'démo', en: 'demo' }} />
               <span class="sr-only">
                 <T
@@ -36,7 +37,7 @@ import { featuredProject, projects } from '../../data/projects';
               </span>
               <Ext />
             </a>
-            <a href={impl.repo} class="link--violet ext" rel="noopener">
+            <a href={impl.repo} class="link--violet ext" target="_blank" rel="noopener">
               <T t={{ fr: 'code', en: 'code' }} />
               <span class="sr-only">
                 <T
@@ -57,11 +58,12 @@ import { featuredProject, projects } from '../../data/projects';
   <div class="project-grid">
     {
       projects.map((project) => (
-        <a class="project" data-reveal href={project.href} rel="noopener">
+        <a class="project" data-reveal href={project.href} target="_blank" rel="noopener">
           <h3 class="project__name">{project.name}</h3>
           <p class="project__text">
             <T t={project.text} />
           </p>
+          <NewTab />
         </a>
       ))
     }

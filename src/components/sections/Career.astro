@@ -1,0 +1,29 @@
+---
+import T from './../T.astro';
+import { career } from '../../data/content';
+---
+
+<section id="parcours" class="section shell">
+  <div class="section__head" data-reveal>
+    <h2 class="section__title">
+      <T t={{ fr: 'Parcours', en: 'Career' }} />
+    </h2>
+    <p class="mono section__aside"><T t={career.place} /></p>
+  </div>
+
+  <ol class="timeline" data-reveal>
+    {
+      career.jobs.map((job) => (
+        <li class="timeline__row">
+          <span class="timeline__period">
+            <T t={job.period} />
+          </span>
+          <span class="timeline__role">
+            <T t={job.role} />
+            <span class="timeline__org">{job.org}</span>
+          </span>
+        </li>
+      ))
+    }
+  </ol>
+</section>

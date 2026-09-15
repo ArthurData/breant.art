@@ -1,15 +1,25 @@
 ---
 import T from './../T.astro';
+import NewTab from './../NewTab.astro';
 import { articles } from '../../data/articles';
 ---
 
 <section id="articles" class="section shell">
-  <h2 class="section__title" style="margin-bottom:28px" data-reveal>Articles</h2>
+  <h2 class="section__title" data-reveal>Articles</h2>
+
+  <p class="section__lede" data-reveal>
+    <T
+      t={{
+        fr: "Des articles que j'ai écrits pour Rtask, le blog de ThinkR.",
+        en: 'Articles I wrote for Rtask, the ThinkR blog.',
+      }}
+    />
+  </p>
 
   <div class="article-grid">
     {
       articles.map((article) => (
-        <a class="article" data-reveal href={article.href} rel="noopener">
+        <a class="article" data-reveal href={article.href} target="_blank" rel="noopener">
           <p class="article__meta">
             {article.source} · <time datetime={article.iso}><T t={article.date} /></time>
           </p>
@@ -17,6 +27,7 @@ import { articles } from '../../data/articles';
           <p class="article__text">
             <T t={article.summary} />
           </p>
+          <NewTab />
         </a>
       ))
     }

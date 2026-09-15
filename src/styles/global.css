@@ -228,12 +228,6 @@ svg {
   color: var(--on-violet);
 }
 
-/* ─── i18n : une seule langue visible, sans JavaScript ───────────────── */
-html[lang='fr'] [data-l='en'],
-html[lang='en'] [data-l='fr'] {
-  display: none;
-}
-
 /* ─── Layout ─────────────────────────────────────────────────────────── */
 .shell {
   max-width: var(--shell);
@@ -407,6 +401,8 @@ html[lang='en'] [data-l='fr'] {
 }
 
 .lang__btn {
+  display: block;
+  text-decoration: none;
   padding: 5px 11px;
   border: 0;
   border-radius: var(--pill);
@@ -416,7 +412,7 @@ html[lang='en'] [data-l='fr'] {
   font-size: 11px;
 }
 
-.lang__btn[aria-pressed='true'] {
+.lang__btn[aria-current='page'] {
   background: var(--violet);
   color: var(--on-violet);
 }
@@ -1358,9 +1354,14 @@ a.article:hover {
     padding: 4px 22px;
   }
 
-  .talk {
+  .talk,
+  .timeline__row {
     grid-template-columns: 1fr;
     gap: 8px;
+  }
+
+  .timeline {
+    padding: 4px 22px;
   }
 
   .project-hero {
@@ -1413,6 +1414,54 @@ a.article:hover {
     opacity: 1;
     transform: none;
   }
+}
+
+/* ─── Frise du parcours ──────────────────────────────────────────────── */
+.timeline {
+  list-style: none;
+  margin: 0;
+  padding: 10px 30px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 24px;
+}
+
+.timeline__row {
+  display: grid;
+  grid-template-columns: 140px 1fr;
+  gap: 24px;
+  padding: 22px 0;
+  border-bottom: 1px solid var(--line);
+  align-items: baseline;
+}
+
+.timeline__row:last-child {
+  border-bottom: 0;
+}
+
+.timeline__period {
+  font-family: var(--font-mono);
+  font-size: 12.5px;
+  color: var(--soft);
+}
+
+.timeline__role {
+  font-size: 16.5px;
+  font-weight: 500;
+}
+
+.timeline__org {
+  color: var(--soft);
+  font-weight: 400;
+}
+
+.timeline__org::before {
+  content: ' · ';
+}
+
+.section__aside {
+  font-size: 12.5px;
+  color: var(--soft);
 }
 
 /* ─── Chapeau de section ─────────────────────────────────────────────── */

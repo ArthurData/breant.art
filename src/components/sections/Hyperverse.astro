@@ -1,6 +1,7 @@
 ---
 import T from './../T.astro';
 import Ext from './../Ext.astro';
+import NewTab from './../NewTab.astro';
 import { hyperverse } from '../../data/content';
 import { packages } from '../../data/projects';
 
@@ -12,7 +13,7 @@ const host = hyperverse.site.replace(/^https?:\/\//, '');
 
   <div class="deep__head">
     <h2 class="deep__title">hyperverse</h2>
-    <a href={hyperverse.site} class="link--yellow ext" rel="noopener">
+    <a href={hyperverse.site} class="link--yellow ext" target="_blank" rel="noopener">
       {host}<Ext />
     </a>
   </div>
@@ -22,7 +23,7 @@ const host = hyperverse.site.replace(/^https?:\/\//, '');
   <div class="pkg-grid">
     {
       packages.map((pkg) => (
-        <a class="pkg" data-reveal href={pkg.href} rel="noopener">
+        <a class="pkg" data-reveal href={pkg.href} target="_blank" rel="noopener">
           <div class="pkg__head">
             <h3 class="pkg__name">{pkg.name}</h3>
             {pkg.status === 'cran' ? (
@@ -36,16 +37,17 @@ const host = hyperverse.site.replace(/^https?:\/\//, '');
           <p class="pkg__text">
             <T t={pkg.text} />
           </p>
+          <NewTab />
         </a>
       ))
     }
   </div>
 
   <div class="deep__links">
-    <a href={hyperverse.github} class="link--yellow ext" rel="noopener">
+    <a href={hyperverse.github} class="link--yellow ext" target="_blank" rel="noopener">
       GitHub<span class="sr-only"> hyperverse</span><Ext />
     </a>
-    <a href={hyperverse.talks} class="link--yellow ext" rel="noopener">
+    <a href={hyperverse.talks} class="link--yellow ext" target="_blank" rel="noopener">
       <T t={{ fr: 'Talks hyperverse', en: 'hyperverse talks' }} /><Ext />
     </a>
   </div>

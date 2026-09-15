@@ -1,6 +1,6 @@
 import type { APIRoute } from 'astro';
 import { site, sameAs } from '../data/site';
-import { speaker, hyperverse, topiq, pedagogy } from '../data/content';
+import { speaker, hyperverse, topiq, pedagogy, career } from '../data/content';
 import { articles, blog } from '../data/articles';
 import { talks, talksPage } from '../data/talks';
 import { packages, projects, featuredProject } from '../data/projects';
@@ -16,7 +16,21 @@ export const GET: APIRoute = () => {
 
   push(`# ${site.name}`, '');
   push(`> ${speaker.bioShort.en}`, '');
-  push(`Site: ${site.url}`, `Based in: France`, `Languages: French, English`, '');
+  push(
+    `Site: ${site.url} (French) | ${site.url}/en/ (English)`,
+    `Based in: Lille, France`,
+    `Languages: French, English`,
+    ''
+  );
+
+  push(
+    '## Career',
+    '',
+    ...career.jobs.map(
+      (job) => `- ${job.period.en} | ${job.role.en} | ${job.org} | ${career.place.en}`
+    ),
+    ''
+  );
 
   push('## Bio', '', speaker.bioLong.en, '');
 
@@ -76,7 +90,7 @@ export const GET: APIRoute = () => {
   push(
     '## Articles',
     '',
-    `Published on ${blog.name}, the ThinkR blog (${blog.url}).`,
+    `Articles written by ${site.name} for ${blog.name}, the ThinkR blog (${blog.url}).`,
     ...articles.map(
       (article) => `- ${article.iso} | ${article.title} | ${article.summary.en} | ${article.href}`
     ),

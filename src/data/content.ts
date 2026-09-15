@@ -91,6 +91,47 @@ export const topiq = {
   ],
 };
 
+/* ═══════════════════════════════════════════════════════════════════════
+   Parcours. Volontairement court : poste, structure, période.
+   ═══════════════════════════════════════════════════════════════════════ */
+
+export interface Job {
+  role: L10n;
+  org: string;
+  /** Période affichée. */
+  period: L10n;
+  /** Dates ISO, pour le JSON-LD. `end: null` = poste en cours. */
+  start: string;
+  end: string | null;
+}
+
+export const career = {
+  place: { fr: 'Lille, France', en: 'Lille, France' } as L10n,
+  jobs: [
+    {
+      role: { fr: 'Data Analyst & R Trainer', en: 'Data Analyst & R Trainer' },
+      org: 'ThinkR',
+      period: { fr: 'depuis 2021', en: 'since 2021' },
+      start: '2021-09',
+      end: null,
+    },
+    {
+      role: { fr: 'Data Analyst', en: 'Data Analyst' },
+      org: 'Goodays (ex-Critizr)',
+      period: { fr: '2018 à 2021', en: '2018 to 2021' },
+      start: '2018-01',
+      end: '2021-09',
+    },
+    {
+      role: { fr: 'Data Analyst', en: 'Data Analyst' },
+      org: 'Frizbiz',
+      period: { fr: '2016 à 2017', en: '2016 to 2017' },
+      start: '2016-03',
+      end: '2017-12',
+    },
+  ] as Job[],
+};
+
 export const pedagogy = {
   title: { fr: 'Pédagogie', en: 'Teaching' } as L10n,
   text: {

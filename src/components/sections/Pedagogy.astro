@@ -17,7 +17,7 @@ const { testimonial } = pedagogy;
         <blockquote class="quote__text" lang="fr">{testimonial.quote}</blockquote>
         <figcaption class="quote__by">
           {testimonial.author} · <T t={testimonial.date} /> ·
-          <a href={testimonial.sourceUrl} class="ext" rel="noopener">
+          <a href={testimonial.sourceUrl} class="ext" target="_blank" rel="noopener">
             <T t={testimonial.sourceLabel} /><Ext />
           </a>
         </figcaption>
