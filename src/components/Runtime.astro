@@ -1,0 +1,136 @@
+---
+/**
+ * Comportements client : langue, thème, filtre des talks, apparition au défilement.
+ * Un seul script inline, sans dépendance. Tout reste fonctionnel sans JavaScript.
+ */
+import { site } from '../data/site';
+---
+
+<script is:inline define:vars={{ titles: site.titleByLocale }}>
+  (function () {
+    var html = document.documentElement;
+
+    /* ── Langue ─────────────────────────────────────────────────────── */
+    function syncLang(lang) {
+      html.lang = lang;
+      if (titles[lang]) document.title = titles[lang];
+      document.querySelectorAll('[data-set-lang]').forEach(function (btn) {
+        btn.setAttribute(
+          'aria-pressed',
+          btn.dataset.setLang === lang ? 'true' : 'false'
+        );
+      });
+    }
+
+    document.querySelectorAll('[data-set-lang]').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var lang = btn.dataset.setLang;
+        syncLang(lang);
+        try {
+          localStorage.setItem('lang', lang);
+        } catch (e) {}
+      });
+    });
+
+    syncLang(html.lang === 'en' ? 'en' : 'fr');
+
+    /* ── Thème ──────────────────────────────────────────────────────── */
+    var prefersDark = window.matchMedia('(prefers-color-scheme: dark)');
+    var toggle = document.querySelector('[data-theme-toggle]');
+
+    if (toggle) {
+      toggle.addEventListener('click', function () {
+        var current = html.dataset.theme || (prefersDark.matches ? 'dark' : 'light');
+        var next = current === 'dark' ? 'light' : 'dark';
+        html.dataset.theme = next;
+        try {
+          localStorage.setItem('theme', next);
+        } catch (e) {}
+      });
+    }
+
+    /* ── Filtre des talks ───────────────────────────────────────────── */
+    var group = document.querySelector('[data-talk-filters]');
+
+    if (group) {
+      var rows = Array.prototype.slice.call(document.querySelectorAll('.talk'));
+      var empty = document.querySelector('[data-talks-empty]');
+
+      group.addEventListener('click', function (event) {
+        var btn = event.target.closest('[data-filter]');
+        if (!btn) return;
+
+        var filter = btn.dataset.filter;
+        group.querySelectorAll('[data-filter]').forEach(function (other) {
+          other.setAttribute('aria-pressed', other === btn ? 'true' : 'false');
+        });
+
+        var visible = [];
+        rows.forEach(function (row) {
+          var match =
+            filter === 'all' ||
+            row.dataset.topic === filter ||
+            row.dataset.year === filter;
+          row.hidden = !match;
+          row.classList.remove('is-last');
+          if (match) visible.push(row);
+        });
+
+        if (visible.length) visible[visible.length - 1].classList.add('is-last');
+        if (empty) empty.hidden = visible.length > 0;
+      });
+    }
+
+    /* ── Apparition au défilement ───────────────────────────────────── */
+    var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    if (!reduce && 'IntersectionObserver' in window) {
+      var reveal = function (el) {
+        el.classList.add('is-revealed');
+        io.unobserve(el);
+      };
+
+      var io = new IntersectionObserver(
+        function (entries) {
+          entries.forEach(function (entry) {
+            if (!entry.isIntersecting) return;
+            /* Une frame d'écart garantit que l'état initial a bien été calculé. */
+            requestAnimationFrame(function () {
+              reveal(entry.target);
+            });
+          });
+        },
+        { rootMargin: '0px 0px -8% 0px', threshold: 0.04 }
+      );
+
+      var pending = [];
+      var index = 0;
+
+      document.querySelectorAll('[data-reveal]').forEach(function (el) {
+        /* Ce qui est déjà visible n'est pas animé : pas de clignotement. */
+        if (el.getBoundingClientRect().top < window.innerHeight * 0.92) return;
+        el.classList.add('reveal-pending');
+        el.style.transitionDelay = (index++ % 4) * 70 + 'ms';
+        pending.push(el);
+        io.observe(el);
+      });
+
+      /* Filet de sécurité : rien ne doit rester invisible dans le viewport. */
+      var sweep = function () {
+        pending = pending.filter(function (el) {
+          if (el.classList.contains('is-revealed')) return false;
+          var box = el.getBoundingClientRect();
+          if (box.top < window.innerHeight && box.bottom > 0) {
+            reveal(el);
+            return false;
+          }
+          return true;
+        });
+      };
+
+      window.addEventListener('load', sweep);
+      window.addEventListener('scroll', sweep, { passive: true });
+      window.addEventListener('resize', sweep, { passive: true });
+    }
+  })();
+</script>

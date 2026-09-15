@@ -1,0 +1,49 @@
+---
+import T from './../T.astro';
+import { speaker } from '../../data/content';
+import { site } from '../../data/site';
+---
+
+<section id="speaker" class="section shell">
+  <h2 class="section__title" style="margin-bottom:32px" data-reveal>Speaker kit</h2>
+
+  <div class="kit">
+    <div data-reveal>
+      <p class="kit__label kit__label--violet">
+        <T t={{ fr: 'Bio courte', en: 'Short bio' }} />
+      </p>
+      <p class="kit__bio-short"><T t={speaker.bioShort} /></p>
+
+      <p class="kit__label kit__label--violet">
+        <T t={{ fr: 'Bio longue', en: 'Long bio' }} />
+      </p>
+      <p class="kit__bio-long"><T t={speaker.bioLong} /></p>
+    </div>
+
+    <div data-reveal>
+      <p class="kit__label kit__label--coral">
+        <T t={{ fr: 'Sujets proposés', en: 'Talk topics' }} />
+      </p>
+
+      <div class="topics">
+        {speaker.topics.map((topic) => <p><T t={topic} /></p>)}
+      </div>
+
+      <p class="kit__label kit__label--violet" style="margin-top:26px">
+        <T t={speaker.offCode.label} />
+      </p>
+
+      <div class="kit__photo">
+        <img
+          src={speaker.photo}
+          width="68"
+          height="68"
+          alt={site.name}
+          loading="lazy"
+          decoding="async"
+        />
+        <p class="kit__photo-text"><T t={speaker.offCode.text} /></p>
+      </div>
+    </div>
+  </div>
+</section>

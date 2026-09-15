@@ -1,0 +1,38 @@
+---
+import T from './../T.astro';
+import Ext from './../Ext.astro';
+import { topiq } from '../../data/content';
+
+const host = topiq.url.replace(/^https?:\/\//, '');
+---
+
+<section id="topiq" class="section shell">
+  <div class="split">
+    <div data-reveal>
+      <p class="eyebrow eyebrow--teal">Side project</p>
+
+      <div class="topiq__head">
+        <h2 class="topiq__title">TOPIQ</h2>
+        <a href={topiq.url} class="link--teal ext" rel="noopener">{host}<Ext /></a>
+      </div>
+
+      <p class="topiq__text"><T t={topiq.text} /></p>
+      <p class="topiq__note"><T t={topiq.note} /></p>
+    </div>
+
+    <dl class="stats" data-reveal>
+      {
+        topiq.stats.map((stat) => (
+          <div class="stats__row">
+            <dt class="stats__key">
+              <T t={stat.key} />
+            </dt>
+            <dd class="stats__val">
+              <T t={stat.value} />
+            </dd>
+          </div>
+        ))
+      }
+    </dl>
+  </div>
+</section>

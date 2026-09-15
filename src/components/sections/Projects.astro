@@ -1,0 +1,69 @@
+---
+import T from './../T.astro';
+import Ext from './../Ext.astro';
+import { featuredProject, projects } from '../../data/projects';
+---
+
+<section id="projets" class="section shell">
+  <h2 class="section__title" style="margin-bottom:32px" data-reveal>
+    <T t={{ fr: 'Autres projets', en: 'Other projects' }} />
+  </h2>
+
+  <div class="project-hero" data-reveal>
+    <div class="project-hero__head">
+      <h3 class="project-hero__title">{featuredProject.name}</h3>
+      <a href={featuredProject.awardUrl} class="badge--award" rel="noopener">
+        <T t={featuredProject.award} /><Ext />
+      </a>
+    </div>
+
+    <p class="project-hero__text"><T t={featuredProject.text} /></p>
+
+    <ul class="impls">
+      {
+        featuredProject.implementations.map((impl) => (
+          <li class="impl">
+            <span class="impl__lang">{impl.label}</span>
+            <a href={impl.demo} class="link--violet ext" rel="noopener">
+              <T t={{ fr: 'démo', en: 'demo' }} />
+              <span class="sr-only">
+                <T
+                  t={{
+                    fr: ` de Signature en ${impl.label}`,
+                    en: ` of Signature in ${impl.label}`,
+                  }}
+                />
+              </span>
+              <Ext />
+            </a>
+            <a href={impl.repo} class="link--violet ext" rel="noopener">
+              <T t={{ fr: 'code', en: 'code' }} />
+              <span class="sr-only">
+                <T
+                  t={{
+                    fr: ` de Signature en ${impl.label}`,
+                    en: ` of Signature in ${impl.label}`,
+                  }}
+                />
+              </span>
+              <Ext />
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+
+  <div class="project-grid">
+    {
+      projects.map((project) => (
+        <a class="project" data-reveal href={project.href} rel="noopener">
+          <h3 class="project__name">{project.name}</h3>
+          <p class="project__text">
+            <T t={project.text} />
+          </p>
+        </a>
+      ))
+    }
+  </div>
+</section>

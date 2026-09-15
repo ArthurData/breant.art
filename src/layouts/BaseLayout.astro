@@ -1,5 +1,7 @@
 ---
 import css from '../styles/global.css?raw';
+import Schema from '../components/Schema.astro';
+import { site } from '../data/site';
 
 interface Props {
   title?: string;
@@ -8,10 +10,12 @@ interface Props {
 }
 
 const {
-  title = "Arthur Bréant — Consultant & Trainer",
-  description = "Consultant and trainer at ThinkR. Passionate about web and tech.",
-  lang = "en",
+  title = site.title,
+  description = site.description,
+  lang = 'fr',
 } = Astro.props;
+
+const ogImage = new URL(site.ogImage, site.url).href;
 ---
 
 <!doctype html>
@@ -21,27 +25,90 @@ const {
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{title}</title>
     <meta name="description" content={description} />
-    <meta name="theme-color" content="#7c3aed" />
+    <meta name="author" content={site.name} />
 
-    <!-- Favicon -->
-    <link rel="icon" href="/favicon.ico" sizes="any" />
+    <meta name="theme-color" content="#FFFCF6" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#141220" media="(prefers-color-scheme: dark)" />
 
-    <!-- LCP : preload avatar -->
-    <link rel="preload" href="/avatar.webp" as="image" fetchpriority="high" />
+    <link rel="canonical" href={site.url} />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
 
-    <!-- Font preloads -->
-    <link rel="preload" href="/fonts/inter-400.woff2" as="font" type="font/woff2" crossorigin />
-    <link rel="preload" href="/fonts/inter-500.woff2" as="font" type="font/woff2" crossorigin />
-    <link rel="preload" href="/fonts/inter-600.woff2" as="font" type="font/woff2" crossorigin />
+    <meta property="og:type" content="profile" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={site.ogDescription} />
+    <meta property="og:url" content={site.url} />
+    <meta property="og:site_name" content={site.domain} />
+    <meta property="og:locale" content="fr_FR" />
+    <meta property="og:locale:alternate" content="en_GB" />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content={site.title} />
+    <meta property="profile:first_name" content="Arthur" />
+    <meta property="profile:last_name" content="Bréant" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={site.ogDescription} />
+    <meta name="twitter:image" content={ogImage} />
+
+    <Schema />
+
+    <!-- Polices auto-hébergées, variables, sous-ensemble latin : 3 fichiers, ~96 Ko -->
+    <link
+      rel="preload"
+      href="/fonts/gabarito-latin.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <link
+      rel="preload"
+      href="/fonts/jakarta-latin.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <link
+      rel="preload"
+      href="/fonts/jetbrains-mono-latin.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+
+    <!-- Thème et langue appliqués avant le premier rendu : aucun clignotement -->
+    <script is:inline>
+      (function () {
+        var h = document.documentElement;
+        try {
+          var t = localStorage.getItem('theme');
+          if (t === 'dark' || t === 'light') h.dataset.theme = t;
+          var l = localStorage.getItem('lang');
+          if (l === 'fr' || l === 'en') h.lang = l;
+        } catch (e) {}
+      })();
+    </script>
 
     <!-- CSS inliné : pas de fichier externe, zéro round-trip supplémentaire -->
     <Fragment set:html={`<style>${css}</style>`} />
 
-    <!-- Privacy-friendly analytics by Plausible -->
-    <script async src="https://plausible.breant.art/js/pa-DEg34YPL_HqLTHcaj0OR6.js"></script>
-    <script>
-      window.plausible=window.plausible||function(){(plausible.q=plausible.q||[]).push(arguments)},plausible.init=plausible.init||function(i){plausible.o=i||{}};
-      plausible.init()
+    <!-- Analytics respectueux de la vie privée (Plausible) -->
+    <script
+      async
+      src="https://plausible.breant.art/js/pa-DEg34YPL_HqLTHcaj0OR6.js"></script>
+    <script is:inline>
+      window.plausible =
+        window.plausible ||
+        function () {
+          (plausible.q = plausible.q || []).push(arguments);
+        };
+      plausible.init =
+        plausible.init ||
+        function (i) {
+          plausible.o = i || {};
+        };
+      plausible.init();
     </script>
   </head>
   <body>

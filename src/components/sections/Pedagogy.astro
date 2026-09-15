@@ -1,0 +1,46 @@
+---
+import T from './../T.astro';
+import Ext from './../Ext.astro';
+import { pedagogy, skills } from '../../data/content';
+
+const { testimonial } = pedagogy;
+---
+
+<section id="pedagogie" class="section shell">
+  <div class="duo">
+    <div data-reveal>
+      <h2 class="section__title"><T t={pedagogy.title} /></h2>
+
+      <p class="training__text"><T t={pedagogy.text} /></p>
+
+      <figure class="quote">
+        <blockquote class="quote__text" lang="fr">{testimonial.quote}</blockquote>
+        <figcaption class="quote__by">
+          {testimonial.author} · <T t={testimonial.date} /> ·
+          <a href={testimonial.sourceUrl} class="ext" rel="noopener">
+            <T t={testimonial.sourceLabel} /><Ext />
+          </a>
+        </figcaption>
+      </figure>
+    </div>
+
+    <div data-reveal>
+      <h2 class="section__title">
+        <T t={{ fr: 'Compétences', en: 'Skills' }} />
+      </h2>
+
+      <div class="skills">
+        {
+          skills.map(({ tone, label, list }) => (
+            <div>
+              <p class={`skills__label skills__label--${tone}`}>
+                <T t={label} />
+              </p>
+              <p class="skills__list">{list}</p>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </div>
+</section>

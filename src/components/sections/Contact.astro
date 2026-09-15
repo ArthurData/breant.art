@@ -1,0 +1,35 @@
+---
+import T from './../T.astro';
+import Ext from './../Ext.astro';
+import { contactSection } from '../../data/content';
+import { contact } from '../../data/site';
+---
+
+<section id="contact" class="contact" data-reveal>
+  <div class="blob blob--contact" aria-hidden="true"></div>
+
+  <div class="contact__inner">
+    <h2 class="contact__title"><T t={contactSection.title} /></h2>
+
+    <div class="btn-row">
+      <a href={contact.linkedin} class="btn btn--on-violet" rel="noopener me">
+        <T t={{ fr: 'Me joindre sur LinkedIn', en: 'Reach me on LinkedIn' }} />
+      </a>
+      {
+        contact.email && (
+          <a href={`mailto:${contact.email}`} class="btn btn--ghost-violet">
+            <T t={{ fr: 'Écrire un message', en: 'Send a message' }} />
+          </a>
+        )
+      }
+    </div>
+
+    <div class="contact__links">
+      <a href={contact.github} class="ext" rel="noopener me">GitHub<Ext /></a>
+      <a href={contact.linkedin} class="ext" rel="noopener me">LinkedIn<Ext /></a>
+      <a href="https://hyperverse.world" class="ext" rel="noopener">hyperverse<Ext /></a>
+      <a href="https://topiq.run" class="ext" rel="noopener">TOPIQ<Ext /></a>
+      <a href="https://pierrot.show/" class="ext" rel="noopener">pierrot.show<Ext /></a>
+    </div>
+  </div>
+</section>

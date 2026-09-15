@@ -1,0 +1,52 @@
+---
+import T from './../T.astro';
+import Ext from './../Ext.astro';
+import { hyperverse } from '../../data/content';
+import { packages } from '../../data/projects';
+
+const host = hyperverse.site.replace(/^https?:\/\//, '');
+---
+
+<section id="hyperverse" class="deep" data-reveal>
+  <p class="deep__eyebrow"><T t={hyperverse.eyebrow} /></p>
+
+  <div class="deep__head">
+    <h2 class="deep__title">hyperverse</h2>
+    <a href={hyperverse.site} class="link--yellow ext" rel="noopener">
+      {host}<Ext />
+    </a>
+  </div>
+
+  <p class="deep__lede"><T t={hyperverse.lede} /></p>
+
+  <div class="pkg-grid">
+    {
+      packages.map((pkg) => (
+        <a class="pkg" data-reveal href={pkg.href} rel="noopener">
+          <div class="pkg__head">
+            <h3 class="pkg__name">{pkg.name}</h3>
+            {pkg.status === 'cran' ? (
+              <span class="badge badge--cran">CRAN</span>
+            ) : (
+              <span class="badge badge--wip">
+                <T t={{ fr: 'en dév.', en: 'wip' }} />
+              </span>
+            )}
+          </div>
+          <p class="pkg__text">
+            <T t={pkg.text} />
+          </p>
+        </a>
+      ))
+    }
+  </div>
+
+  <div class="deep__links">
+    <a href={hyperverse.github} class="link--yellow ext" rel="noopener">
+      GitHub<span class="sr-only"> hyperverse</span><Ext />
+    </a>
+    <a href={hyperverse.talks} class="link--yellow ext" rel="noopener">
+      <T t={{ fr: 'Talks hyperverse', en: 'hyperverse talks' }} /><Ext />
+    </a>
+  </div>
+</section>

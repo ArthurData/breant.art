@@ -1,0 +1,23 @@
+---
+import T from './../T.astro';
+import { pillars } from '../../data/content';
+---
+
+<section class="section shell">
+  <div class="pillars">
+    {
+      pillars.map(({ tone, title, text, href }) => {
+        const Tag = href ? 'a' : 'div';
+        return (
+          <Tag class={`pillar pillar--${tone}`} data-reveal {...(href ? { href } : {})}>
+            <div class="pillar__glyph" aria-hidden="true" />
+            <h2 class="pillar__title">{title}</h2>
+            <p class="pillar__text">
+              <T t={text} />
+            </p>
+          </Tag>
+        );
+      })
+    }
+  </div>
+</section>

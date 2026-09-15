@@ -1,0 +1,18 @@
+---
+/**
+ * Fragment bilingue. Les deux langues sont dans le HTML ; le CSS
+ * (`html[lang] [data-l]`) n'en affiche qu'une — aucun JS requis au chargement.
+ *
+ *   <T t={monTexte} />                        texte simple
+ *   <T><Fragment slot="fr">…</Fragment>…</T>  texte enrichi (balises)
+ */
+import type { L10n } from '../data/types';
+
+interface Props {
+  t?: L10n | null;
+}
+
+const { t } = Astro.props;
+---
+
+<span data-l="fr"><slot name="fr">{t?.fr}</slot></span><span data-l="en"><slot name="en">{t?.en}</slot></span>

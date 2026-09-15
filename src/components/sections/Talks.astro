@@ -1,0 +1,81 @@
+---
+import T from './../T.astro';
+import Ext from './../Ext.astro';
+import { talks, talkFilters, talksPage } from '../../data/talks';
+
+const filters = talkFilters(talks);
+const host = talksPage.url.replace(/^https?:\/\//, '').replace(/\/$/, '');
+---
+
+<section id="talks" class="section shell">
+  <h2 class="section__title" data-reveal>Talks</h2>
+
+  <p class="section__lede" data-reveal>
+    <T t={talksPage.lede} />{' '}
+    <a href={talksPage.url} class="link--violet ext" rel="noopener">{host}<Ext /></a>
+  </p>
+
+  {
+    filters.length > 0 && (
+      <div
+        class="filters"
+        data-reveal
+        role="group"
+        aria-labelledby="talk-filters-label"
+        data-talk-filters
+      >
+        <span class="sr-only" id="talk-filters-label">
+          <T t={{ fr: 'Filtrer les talks', en: 'Filter talks' }} />
+        </span>
+        <button type="button" class="filter" data-filter="all" aria-pressed="true">
+          <T t={{ fr: 'Tous', en: 'All' }} />
+        </button>
+        {filters.map((f) => (
+          <button type="button" class="filter" data-filter={f.key} aria-pressed="false">
+            <T t={f.label} />
+          </button>
+        ))}
+      </div>
+    )
+  }
+
+  <div class="talks" data-reveal>
+    {
+      talks.map((talk) => (
+        <div class="talk" data-topic={talk.topic.fr} data-year={talk.year}>
+          <time class="talk__date" datetime={talk.iso}>
+            <T t={talk.date} />
+          </time>
+          <span class="talk__title">
+            <T t={talk.title} />
+            <span class="talk__event">{talk.event}</span>
+          </span>
+          <span class="talk__links">
+            {talk.slides && (
+              <a href={talk.slides} class="ext" rel="noopener">
+                slides
+                <span class="sr-only">
+                  <T t={{ fr: ` : ${talk.title.fr}`, en: `: ${talk.title.en}` }} />
+                </span>
+                <Ext />
+              </a>
+            )}
+            {talk.video && (
+              <a href={talk.video} class="ext" rel="noopener">
+                <T t={{ fr: 'vidéo', en: 'video' }} />
+                <span class="sr-only">
+                  <T t={{ fr: ` : ${talk.title.fr}`, en: `: ${talk.title.en}` }} />
+                </span>
+                <Ext />
+              </a>
+            )}
+          </span>
+        </div>
+      ))
+    }
+
+    <p class="talks__empty" data-talks-empty hidden>
+      <T t={{ fr: 'Aucun talk pour ce filtre.', en: 'No talk matches this filter.' }} />
+    </p>
+  </div>
+</section>

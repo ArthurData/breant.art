@@ -1,0 +1,117 @@
+---
+/**
+ * JSON-LD construit depuis les mêmes données que la page : il ne peut pas
+ * dériver du contenu visible. C'est ce que lisent Google et les moteurs IA
+ * pour savoir qui tu es, ce que tu as écrit, présenté et publié comme code.
+ */
+import { site, sameAs, contact } from '../data/site';
+import { speaker } from '../data/content';
+import { articles, blog } from '../data/articles';
+import { talks } from '../data/talks';
+import { packages, projects, featuredProject } from '../data/projects';
+
+const personId = `${site.url}/#arthur`;
+const abs = (path: string) => new URL(path, site.url).href;
+
+const person = {
+  '@type': 'Person',
+  '@id': personId,
+  name: site.name,
+  givenName: 'Arthur',
+  familyName: 'Bréant',
+  url: site.url,
+  image: abs('/avatar.webp'),
+  jobTitle: "Consultant et formateur, développeur d'applications web R et Python",
+  description: speaker.bioShort.fr,
+  knowsLanguage: ['fr', 'en'],
+  knowsAbout: site.knowsAbout,
+  worksFor: {
+    '@type': 'Organization',
+    name: 'ThinkR',
+    url: 'https://thinkr.fr',
+  },
+  workLocation: { '@type': 'Country', name: 'France' },
+  ...(contact.email ? { email: contact.email } : {}),
+  sameAs,
+};
+
+const blogPostings = articles.map((article) => ({
+  '@type': 'BlogPosting',
+  '@id': article.href,
+  headline: article.title,
+  abstract: article.summary.en,
+  datePublished: article.iso,
+  url: article.href,
+  inLanguage: 'en',
+  author: { '@id': personId },
+  publisher: { '@type': 'Organization', name: blog.name, url: blog.url },
+}));
+
+const presentations = talks.map((talk) => ({
+  '@type': 'PresentationDigitalDocument',
+  name: talk.title.fr,
+  datePublished: talk.iso,
+  inLanguage: 'fr',
+  author: { '@id': personId },
+  ...(talk.slides ? { url: talk.slides } : {}),
+  about: talk.topic.fr,
+  recordedAt: {
+    '@type': 'Event',
+    name: talk.event,
+    startDate: talk.iso,
+    location: { '@type': 'Country', name: 'France' },
+  },
+}));
+
+const software = [
+  ...packages.map((pkg) => ({
+    '@type': 'SoftwareSourceCode',
+    name: pkg.name,
+    description: pkg.text.en,
+    codeRepository: pkg.href,
+    programmingLanguage: 'R',
+    author: { '@id': personId },
+    isPartOf: { '@type': 'SoftwareApplication', name: 'hyperverse', url: 'https://hyperverse.world' },
+  })),
+  ...projects.map((project) => ({
+    '@type': 'SoftwareSourceCode',
+    name: project.name,
+    description: project.text.en,
+    codeRepository: project.href,
+    author: { '@id': personId },
+  })),
+  ...featuredProject.implementations.map((impl) => ({
+    '@type': 'SoftwareApplication',
+    name: `${featuredProject.name} (${impl.label})`,
+    description: featuredProject.text.en,
+    url: impl.demo,
+    codeRepository: impl.repo,
+    applicationCategory: 'WebApplication',
+    author: { '@id': personId },
+    award: featuredProject.award.en,
+    subjectOf: { '@type': 'WebPage', url: featuredProject.awardUrl },
+  })),
+];
+
+const graph = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'ProfilePage',
+      '@id': `${site.url}/#page`,
+      url: site.url,
+      name: site.title,
+      description: site.description,
+      inLanguage: 'fr',
+      mainEntity: { '@id': personId },
+      primaryImageOfPage: abs(site.ogImage),
+    },
+    person,
+    ...blogPostings,
+    ...presentations,
+    ...software,
+  ],
+};
+---
+
+<script type="application/ld+json" is:inline set:html={JSON.stringify(graph)} />
