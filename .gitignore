@@ -1,0 +1,15 @@
+# Dépendances
+node_modules/
+
+# Sorties et caches de build (Vercel construit depuis les sources)
+dist/
+.astro/
+.vercel/
+
+# Variables d'environnement
+.env
+.env.*
+!.env.example
+
+# macOS
+.DS_Store
